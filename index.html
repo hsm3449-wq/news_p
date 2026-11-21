@@ -2,12 +2,50 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=./guide.pdf">
-  <title>언어문화다양성 실천지원자료</title>
-  <script>
-    window.location.replace("./guide.pdf");
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>언어문화다양성 실천지원자료 안내</title>
+  <style>
+    body { font-family: 'Malgun Gothic', sans-serif; background: #f4f6f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: #fff; max-width: 440px; width: 90%; padding: 36px 24px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
+    .badge { display: inline-block; background: #eef2ff; color: #3730a3; font-size: 13px; font-weight: bold; padding: 6px 12px; border-radius: 20px; margin-bottom: 14px; }
+    h1 { font-size: 21px; color: #111; margin: 0 0 12px; }
+    p { font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 28px; }
+    .btn { display: block; width: 100%; box-sizing: border-box; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: bold; text-decoration: none; margin-bottom: 10px; cursor: pointer; }
+    .primary { background: #2563eb; color: #fff; border: none; }
+    .secondary { background: #f3f4f6; color: #333; border: 1px solid #ddd; }
+  </style>
 </head>
 <body>
+  <div class="card">
+    <div class="badge">현장 지원 자료 안내</div>
+    <h1>언어문화다양성 실천지원자료</h1>
+    <p>아래 버튼을 눌러 자료집 전문(PDF)을<br>바로 열람하거나 다운로드하실 수 있습니다.</p>
+    <a href="./guide.pdf" target="_blank" class="btn primary">자료집 바로보기 (PDF)</a>
+    <button type="button" onclick="downloadPDF()" class="btn secondary">파일 다운로드</button>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      fetch('./guide.pdf')
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = '언어문화다양성_실천지원자료.pdf';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(() => {
+          // 로컬(file://) 환경에서 보안 차단 시 기본 다운로드 링크로 대체 실행
+          const a = document.createElement('a');
+          a.href = './guide.pdf';
+          a.download = '언어문화다양성_실천지원자료.pdf';
+          a.click();
+        });
+    }
+  </script>
 </body>
 </html>
